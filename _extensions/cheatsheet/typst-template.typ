@@ -29,6 +29,8 @@
       inset: 4pt,           // Space between text and edge of the blue box
       radius: 3pt,          // Rounded corners
       width: 100%,          // Make it fill the entire column width
+      above: 5pt,
+      below: 5pt,
       {
         set text(fill: white, weight: "bold")
         it
@@ -46,7 +48,7 @@
     text(size: 10pt, weight: "medium")[#author],
     text(size: 8pt, fill: gray)[#date]
 )
-    
+  #set par(leading: 0.5em)
   #doc
   ])
   

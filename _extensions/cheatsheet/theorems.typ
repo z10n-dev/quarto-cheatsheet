@@ -8,20 +8,24 @@
 
 // Helper function to reduce duplication
 #let create_numbered_block(label, title: none, body) = {
-  context {
-    let section_num = counter(heading).at(here()).first()
-    theorem_counter.step()
-    let block_num = theorem_counter.at(here()).first()
-    let display_num = [#section_num.#block_num]
+    context {
+        let section_num = counter(heading).at(here()).first()
+        theorem_counter.step()
+        let block_num = theorem_counter.at(here()).first()
+        let display_num = [#section_num.#block_num]
 
-    block(
-      width: 100%,
-      breakable: true
-    )[
-      #text(weight: "bold")[#label #display_num #if title != none [(#title)]:] 
-      #body
-    ]
-  }
+        block(
+            width: 100%,
+            breakable: true,
+            inset: 0pt,
+            above: 5pt,
+            below: 4pt
+        )[
+            #set par(leading: 0.5em)
+            #text(weight: "bold")[#label #display_num #if title != none [(#title)]:] 
+            #body
+        ]
+    }
 }
 
 #let theorem(title: none, body) = {
