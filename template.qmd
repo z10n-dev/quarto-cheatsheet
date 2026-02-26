@@ -1,0 +1,24 @@
+---
+title: "Mein Cheatsheet"
+date: today
+format: cheatsheet-typst
+---
+
+## Abschnitt 1
+
+Inhalt der ersten Spalte...
+```{=typst}
+#tipp[Das ist ein Tipp!]
+```
+
+## Abschnitt 2
+```{=typst}
+#colbreak()
+```
+
+Inhalt der zweiten Spalte...
+```{=typst}
+#definition(title: "Begriff")[
+  Eine wichtige Definition.
+]
+```
