@@ -1,24 +1,29 @@
 ---
 title: "Mein Cheatsheet"
 date: today
+author: "Max Mustermann"
 format: cheatsheet-typst
 ---
 
-## Abschnitt 1
+## Abschnitt
 
 Inhalt der ersten Spalte...
 ```{=typst}
 #tipp[Das ist ein Tipp!]
 ```
 
-## Abschnitt 2
-```{=typst}
-#colbreak()
-```
+## Abschnitt
 
 Inhalt der zweiten Spalte...
-```{=typst}
-#definition(title: "Begriff")[
-  Eine wichtige Definition.
-]
-```
+
+::: theorem
+Eine wichtige Definition.
+:::
+
+::: theorem
+Eine wichtige Definition.
+:::
+
+::: {.theorem title="My Theorem"}
+Eine wichtige Definition.
+:::
