@@ -29,23 +29,8 @@ function Div(div)
     -- Get title from attribute if provided
     local title = div.attributes["title"] or ""
     
-    -- Process the content
-    local content_blocks = {}
-    for _, elem in ipairs(div.content) do
-      if elem.t == "Para" then
-        -- Extract text from paragraph
-        local text = ""
-        for _, inline in ipairs(elem.content) do
-          if inline.t == "Str" then
-            text = text .. inline.text
-          elseif inline.t == "Space" then
-            text = text .. " "
-          end
-        end
-        table.insert(content_blocks, text)
-      end
-    end
-    local content = table.concat(content_blocks, "\n")
+    -- Convert content to Typst, preserving formatting
+    local content = pandoc.write(pandoc.Pandoc(div.content), "typst")
     
     -- Build the function call
     local typst_code
