@@ -4,6 +4,7 @@ local math_macros = {
   ["\\QQ"] = "\\mathbb{Q}",
   ["\\RR"] = "\\mathbb{R}",
   ["\\CC"] = "\\mathbb{C}",
+  ["\\LL"] = "\\mathbb{L}",
 }
 
 local function apply_math_macros(text)
