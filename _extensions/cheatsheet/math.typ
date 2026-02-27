@@ -1,3 +1,0 @@
-$$
-\newcommand{\NN}{\mathbb{N}}
-$$
