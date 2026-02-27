@@ -1,3 +1,11 @@
+-- This filter converts fenced divs with specific classes to Typst function calls and applies math macros to inline and display math.
+local apply_math_macros = require("math-macros")
+
+function Math(el)
+  local text = apply_math_macros(el.text)
+  return pandoc.Math(el.mathtype, text)
+end
+
 -- List of block types that should be converted
 local block_types = {
   "theorem",

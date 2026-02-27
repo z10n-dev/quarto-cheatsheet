@@ -7,7 +7,6 @@ contributes:
     typst:
       filters:
         - blocks-filter.lua
-        - math-macros.lua
       paper: "a4"
       orientation: "landscape"
       columns: 3
