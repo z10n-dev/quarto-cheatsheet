@@ -9,4 +9,10 @@ $endif$
 $if(author)$
   author: [$author$],
 $endif$
+$if(cols)$
+  cols: $cols$,
+$endif$
+$if(font-size)$
+  font-size: $font-size$,
+$endif$
 )

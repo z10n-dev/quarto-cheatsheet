@@ -22,5 +22,6 @@
 ]
 
 
-#let tipp(suffix: "", body) = callout(body, [*Tipp:* #suffix], blue)
-#let warnung(suffix: "", body) = callout(body, [*⚠️ Warnung:* #suffix], red)
+#let tipp(title: "", body) = callout(body, [*Tipp:* #title], blue)
+#let warnung(title: "", body) = callout(body, [*⚠️ Warnung:* #title], red)
+#let default(title: "", body) = callout(body, [*#title:*], gray)

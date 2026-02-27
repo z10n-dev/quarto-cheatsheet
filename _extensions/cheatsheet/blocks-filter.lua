@@ -12,7 +12,10 @@ local block_types = {
   "definition",
   "corollar",
   "lemma",
-  "proposition"
+  "proposition",
+  "tipp",
+  "warnung",
+  "default"
 }
 
 -- Create a map for quick lookup  

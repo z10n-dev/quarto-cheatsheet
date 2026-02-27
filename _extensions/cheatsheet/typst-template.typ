@@ -2,7 +2,8 @@
   title: "Test",
   author: "Max Mustermann",
   date: none,
-  cols: 3,
+  cols: 4,
+  font-size: 9pt,
   doc,
 ) = {
   set page(
@@ -10,7 +11,7 @@
     flipped: true,
     margin: (x: 1cm, y: 1cm),
   )
-  set text(size: 9pt)
+  set text(size: font-size)
   set heading(numbering: "1")
   
   // Headings

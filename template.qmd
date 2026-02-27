@@ -3,6 +3,8 @@ title: "Mein Cheatsheet"
 date: today
 author: "Max Mustermann"
 format: cheatsheet-typst
+cols: 4
+font-size: 9pt
 ---
 
 ## Abschnitt
@@ -35,4 +37,9 @@ Eine wichtige Definition. Lorem ipsum dolor sit amet, consectetur adipiscing eli
 
 ::: definition
 Die Menge der **natürlichen Zahlen** ist definiert als $\mathbb{N} = \{1,2,3,\dots\}$. Zählt man die Null noch dazu, schreibt man $\mathbb{N}_0 = \NN\cup \{0\} = \{0,1,2,3,\dots\}$
+:::
+
+::: tipp
+title: Test
+This is a Tip
 :::
