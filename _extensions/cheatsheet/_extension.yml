@@ -18,6 +18,5 @@ contributes:
         - typst-template.typ
         - typst-show.typ
       include-before-body:
-        - math.typ
         - callouts.typ
         - theorems.typ
