@@ -32,3 +32,7 @@ Eine wichtige Definition.
 ::: {.theorem title="My Theorem"}
 Eine wichtige Definition. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur.
 :::
+
+::: definition
+Die Menge der **natürlichen Zahlen** ist definiert als $\mathbb{N} = \{1,2,3,\dots\}$. Zählt man die Null noch dazu, schreibt man $\mathbb{N}_0 = \NN\cup \{0\} = \{0,1,2,3,\dots\}$
+:::
