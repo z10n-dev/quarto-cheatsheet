@@ -1,4 +1,4 @@
 template_files
 *.html
 *.pdf
-
+.diren/
