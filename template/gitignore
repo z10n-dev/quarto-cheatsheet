@@ -1,4 +1,5 @@
 *.pdf
+.direnv/
 /.quarto/
 **/*.quarto_ipynb
 /.luarc.json
