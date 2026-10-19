@@ -1,0 +1,46 @@
+---
+title: "My Cheatsheet"
+date: today
+author: "Max Mustermann"
+format: cheatsheet-typst
+cols: 3
+font-size: 9pt
+---
+
+# Getting Started
+
+Replace this content with your own notes. The layout flows automatically
+across the configured number of columns.
+
+- Use `#` for top-level sections and `##` for subsections
+- Standard Markdown works: **bold**, *italic*, `code`, lists, and tables
+- Math macros such as $\NN$, $\ZZ$, and $\RR$ are available
+
+# Callouts
+
+::: tipp
+Tips are rendered as blue callout blocks.
+:::
+
+::: {.warnung title="Important"}
+Warnings are rendered in red and can have a custom title.
+:::
+
+::: default
+The `default` class renders a neutral gray callout.
+:::
+
+# Theorems
+
+::: theorem
+Every theorem is numbered automatically within its section.
+:::
+
+::: {.definition title="Natural numbers"}
+The natural numbers are defined as $\NN = \{1, 2, 3, \dots\}$.
+:::
+
+# Further Reading
+
+See `examples/example.qmd` for a complete showcase of all callouts, theorem
+environments, and formatting options.

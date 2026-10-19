@@ -9,7 +9,6 @@ contributes:
         - blocks-filter.lua
       paper: "a4"
       orientation: "landscape"
-      columns: 3
       margin:
         x: 1cm
         y: 1cm

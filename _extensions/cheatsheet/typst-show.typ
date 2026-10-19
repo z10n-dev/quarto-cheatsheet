@@ -1,4 +1,4 @@
-// Verbindet Quarto-Metadaten mit dem Template
+// Connect Quarto metadata to the template
 #show: cheatsheet.with(
 $if(title)$
   title: [$title$],

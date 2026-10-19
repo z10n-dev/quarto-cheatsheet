@@ -1,28 +1,61 @@
 # quarto-cheatsheet
 
-A Quarto extension for creating compact, multi-column cheatsheets rendered as PDF via Typst. Produces A4 landscape PDFs with a 3-column layout, styled headings, callout blocks, and auto-numbered theorem environments.
+A Quarto extension for compact, multi-column cheatsheets rendered to PDF with
+Typst. It produces A4 landscape pages with a three-column layout, colored
+section headings, callout blocks, auto-numbered theorem environments, and
+short math macros.
 
-## Preview
+## Features
 
-The output is an A4 landscape PDF with:
-- Hierarchical headings in blue-gradient color bands
-- Up to 5 heading levels, each with a distinct shade of blue
-- 3-column layout with 9pt font for density
-- Callout blocks and numbered theorem environments
+- A4 landscape pages with a configurable number of columns
+- Five heading levels, each with its own shade of blue
+- Compact 9pt body text by default
+- Callouts: tip, warning, and neutral blocks
+- Numbered theorem-style environments
+- Math macros for common number sets (`\NN`, `\ZZ`, `\QQ`, `\RR`, `\CC`, `\LL`)
+- Markdown content throughout, including formatted text inside callouts and
+  theorem blocks
 
-## Installation
+## Requirements
+
+- Quarto >= 1.4.0
+- Typst support in your Quarto installation
+
+## Create a Cheatsheet from the Template
+
+The recommended way to start a new cheatsheet is with the Quarto starter
+template:
 
 ```bash
-quarto add noelschaller/quarto-cheatsheet
+quarto use template z10n-dev/quarto-cheatsheet
 ```
 
-Or copy the `_extensions/cheatsheet/` directory into your project.
+Quarto asks for a target directory and copies the template and its extension
+there. The included `template.qmd` is renamed to match the directory name.
+Move into the new directory and render the document:
 
-**Requirements:** Quarto >= 1.4.0
+```bash
+cd my-cheatsheet
+quarto render
+```
 
-## Usage
+You can also render a specific document:
 
-Set the format to `cheatsheet-typst` in your document's YAML front matter:
+```bash
+quarto render my-cheatsheet.qmd
+```
+
+## Use in an Existing Project
+
+From the root of an existing Quarto project, add only the format extension:
+
+```bash
+quarto add z10n-dev/quarto-cheatsheet
+```
+
+This installs the extension under `_extensions/cheatsheet/` without replacing
+your project files. Set the format in the YAML front matter of any document
+that should use the cheatsheet layout:
 
 ```yaml
 ---
@@ -30,45 +63,105 @@ title: "My Cheatsheet"
 date: today
 author: "Your Name"
 format: cheatsheet-typst
+cols: 3
+font-size: 9pt
 ---
 ```
 
-Then write content using standard Markdown. Sections (`##`) become column break hints — the 3-column layout flows content automatically.
+Then render the document normally:
+
+```bash
+quarto render path/to/cheatsheet.qmd
+```
+
+## Update an Existing Project
+
+Run the update from the project directory containing `_extensions/`:
+
+```bash
+quarto update extension z10n-dev/quarto-cheatsheet
+```
+
+Quarto shows the installed and available versions and asks for confirmation.
+To inspect installed extensions first, run:
+
+```bash
+quarto list extensions
+```
+
+The update replaces only `_extensions/cheatsheet/`. It does not overwrite your
+documents or reapply changes from `template.qmd`, because a starter template is
+copied only when the project is created. Commit local changes before updating
+if you have modified files inside `_extensions/cheatsheet/`.
+
+## Usage
+
+Write content using standard Markdown. Content flows automatically across the
+columns; use headings to structure the sheet.
 
 ```markdown
-## Section Title
+# Section Title
 
-Regular paragraph content, lists, code blocks, etc.
+Regular paragraph content, lists, code blocks, tables, etc.
 
-## Another Section
+## Subsection
 
 More content here.
 ```
 
-## Features
+The document title, author, and date are rendered as a compact header inside
+the first column.
 
-### Callout Blocks
+### Configuration
 
-Use raw Typst blocks for styled callouts:
+| Option      | Default | Description          |
+|-------------|---------|----------------------|
+| `cols`      | `3`     | Number of columns    |
+| `font-size` | `9pt`   | Body font size       |
+
+The `title`, `author`, and `date` fields from the front matter are rendered in
+the header. Paper size, orientation, margins, heading styles, and column gutters
+are defined by the extension.
+
+### Callouts
+
+Callouts can be written as fenced divs. The body supports normal Markdown
+formatting, and `title` is optional:
+
+```markdown
+::: tipp
+This is a tip.
+:::
+
+::: {.warnung title="Careful"}
+This is a warning with a custom title.
+:::
+
+::: default
+A neutral callout.
+:::
+```
+
+| Class       | Appearance                                      |
+|-------------|-------------------------------------------------|
+| `tipp`      | Blue callout with a **Tipp:** heading           |
+| `warnung`   | Red callout with a **⚠️ Warnung:** heading      |
+| `default`   | Gray callout with a custom heading              |
+
+The same blocks are available directly in raw Typst:
 
 ````markdown
 ```{=typst}
-#tipp[This is a tip!]
-```
-
-```{=typst}
-#warnung[This is a warning!]
+#tipp(title: "Optional title", [This is a tip.])
+#warnung([This is a warning.])
 ```
 ````
 
-| Block | Appearance |
-|-------|-----------|
-| `#tipp[...]` | Blue left-border callout with **Tipp:** label |
-| `#warnung[...]` | Red left-border callout with **⚠️ Warnung:** label |
-
 ### Theorem Environments
 
-Use fenced divs to create numbered theorem-style blocks. Numbering resets at each top-level heading and follows the format `<section>.<number>`.
+Fenced divs create numbered theorem-style blocks. Numbering resets at each
+level-1 heading and is displayed as `<section>.<number>`. The body supports
+Markdown formatting, and `title` is optional:
 
 ```markdown
 ::: theorem
@@ -84,30 +177,59 @@ A definition.
 :::
 ```
 
-Available environments: `theorem`, `definition`, `corollar`, `lemma`, `proposition`
+| Class         | Label  |
+|---------------|--------|
+| `theorem`     | `The.` |
+| `definition`  | `Def.` |
+| `corollar`    | `Cor.` |
+| `lemma`       | `Lem.` |
+| `proposition` | `Prop.`|
 
-Labels rendered: `The.`, `Def.`, `Cor.`, `Lem.`, `Prop.`
+### Math Macros
+
+The following LaTeX-style macros are rewritten automatically in inline and
+display math:
+
+| Macro | Renders as   |
+|-------|--------------|
+| `\NN` | $\mathbb{N}$ |
+| `\ZZ` | $\mathbb{Z}$ |
+| `\QQ` | $\mathbb{Q}$ |
+| `\RR` | $\mathbb{R}$ |
+| `\CC` | $\mathbb{C}$ |
+| `\LL` | $\mathbb{L}$ |
+
+Example:
+
+```markdown
+The natural numbers are $\NN = \{1, 2, 3, \dots\}$.
+```
 
 ## Extension Files
 
-| File | Purpose |
-|------|---------|
-| `_extension.yml` | Extension metadata and default format options |
-| `typst-template.typ` | Page layout, heading styles, column setup |
-| `typst-show.typ` | Binds Quarto metadata (title, author, date) to the template |
-| `callouts.typ` | Defines `#tipp` and `#warnung` callout blocks |
-| `theorems.typ` | Defines numbered theorem environments |
-| `blocks-filter.lua` | Pandoc Lua filter that converts fenced divs to Typst function calls |
+| File               | Purpose                                                      |
+|--------------------|--------------------------------------------------------------|
+| `_extension.yml`   | Extension metadata and default format options                |
+| `typst-template.typ` | Page layout, heading styles, and column setup              |
+| `typst-show.typ`   | Binds Quarto metadata (title, author, date, options) to the template |
+| `callouts.typ`     | Defines `#tipp`, `#warnung`, and `#default` callout blocks    |
+| `theorems.typ`     | Defines numbered theorem environments                         |
+| `blocks-filter.lua` | Converts fenced divs to Typst calls and applies math macros  |
+| `math-macros.lua`  | Defines the math macro substitutions                          |
 
-## Default Format Options
+## Development
 
-| Option | Value |
-|--------|-------|
-| Paper | A4 |
-| Orientation | Landscape |
-| Columns | 3 |
-| Margin | 1cm (x and y) |
-| Font size | 9pt |
+The repository includes a Nix flake with Quarto, Pandoc, Python, and R, plus a
+minimal `_quarto.yml` so the example in the subdirectory can resolve the
+extension. With Nix and direnv installed:
+
+```bash
+direnv allow
+quarto render
+```
+
+Without direnv, use `nix develop` instead. `quarto render` builds both
+`template.qmd` and the full feature showcase in `examples/example.qmd`.
 
 ## License
 

@@ -2,7 +2,7 @@
   title: "Test",
   author: "Max Mustermann",
   date: none,
-  cols: 4,
+  cols: 3,
   font-size: 9pt,
   doc,
 ) = {
@@ -39,7 +39,7 @@
     )
   }
 
-  // Dreispaltiges Layout mit Titel
+  // Multi-column layout with document header
   columns(cols, gutter: 1em, [
   #grid(
     columns: 1fr,

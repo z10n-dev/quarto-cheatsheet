@@ -2,3 +2,7 @@ template_files
 *.html
 *.pdf
 .direnv/
+/.quarto/
+**/*.quarto_ipynb
+
+/.luarc.json

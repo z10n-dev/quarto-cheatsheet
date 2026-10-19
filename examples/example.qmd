@@ -1,0 +1,119 @@
+---
+title: "Cheatsheet Feature Showcase"
+date: today
+author: "Max Mustermann"
+format: cheatsheet-typst
+cols: 3
+font-size: 9pt
+---
+
+# Markdown Basics
+
+Regular paragraphs, **bold text**, *italic text*, `inline code`, and
+[links](https://quarto.org) all work as expected.
+
+## Lists
+
+- First bullet
+- Second bullet with $\NN$ math
+- Third bullet
+
+1. First step
+2. Second step
+3. Third step
+
+## Tables
+
+| Environment   | Label  |
+|---------------|--------|
+| `theorem`     | `The.` |
+| `definition`  | `Def.` |
+| `corollar`    | `Cor.` |
+| `lemma`       | `Lem.` |
+| `proposition` | `Prop.`|
+
+## Code
+
+```python
+def greet(name: str) -> str:
+    return f"Hello, {name}!"
+```
+
+# Callouts
+
+::: tipp
+Tips use the `tipp` class and render with a blue heading.
+:::
+
+::: {.warnung title="Watch out"}
+Warnings use the `warnung` class and accept an optional title.
+:::
+
+::: default
+The `default` class renders a neutral gray callout.
+:::
+
+Callouts can also be written directly in raw Typst:
+
+```{=typst}
+#tipp(title: "Raw Typst", [This callout bypasses the Markdown filter.])
+```
+
+# Theorem Environments
+
+::: theorem
+A theorem statement. The body may contain **Markdown formatting** and math
+such as $\RR$.
+:::
+
+::: {.theorem title="Pythagorean theorem"}
+In a right triangle with legs $a$ and $b$ and hypotenuse $c$:
+$a^2 + b^2 = c^2$.
+:::
+
+::: definition
+A definition block.
+:::
+
+::: {.definition title="Natural numbers"}
+The natural numbers are defined as $\NN = \{1, 2, 3, \dots\}$.
+:::
+
+::: corollar
+A corollary block.
+:::
+
+::: lemma
+A lemma block.
+:::
+
+::: proposition
+A proposition block.
+:::
+
+# Math Macros
+
+| Macro | Renders as   |
+|-------|--------------|
+| `\NN` | $\mathbb{N}$ |
+| `\ZZ` | $\mathbb{Z}$ |
+| `\QQ` | $\mathbb{Q}$ |
+| `\RR` | $\mathbb{R}$ |
+| `\CC` | $\mathbb{C}$ |
+| `\LL` | $\mathbb{L}$ |
+
+Display math also supports the macros:
+
+$$
+\NN \subset \ZZ \subset \QQ \subset \RR \subset \CC
+$$
+
+# Configuration
+
+Set the number of columns and the body font size in the YAML front matter:
+
+```yaml
+format: cheatsheet-typst
+cols: 3
+font-size: 9pt
+```
