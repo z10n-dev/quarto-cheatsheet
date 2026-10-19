@@ -30,9 +30,8 @@ template:
 quarto use template z10n-dev/quarto-cheatsheet
 ```
 
-Quarto asks for a target directory and copies the template and its extension
-there. The included `template.qmd` is renamed to match the directory name.
-Move into the new directory and render the document:
+Quarto copies the template and its extension into the target directory. The
+starter document is `index.qmd`. Move into the new directory and render it:
 
 ```bash
 cd my-cheatsheet
@@ -42,8 +41,31 @@ quarto render
 You can also render a specific document:
 
 ```bash
-quarto render my-cheatsheet.qmd
+quarto render index.qmd
 ```
+
+### Project Setup
+
+`quarto use template` does not copy hidden files, so the template ships a
+visible `template/` folder plus a `setup.sh` script. Run it once in the new
+project to create `.gitignore`, `.envrc`, and a CI workflow:
+
+```bash
+./setup.sh            # interactive platform choice
+./setup.sh github     # github | gitlab | gitea | none
+```
+
+It creates:
+
+- `.gitignore`
+- `.envrc` (direnv + the project flake)
+- a render workflow for the chosen platform:
+  - GitHub: `.github/workflows/render.yml`
+  - GitLab: `.gitlab-ci.yml`
+  - Gitea: `.gitea/workflows/render.yml`
+
+Each workflow renders the PDF through the project's Nix flake and uploads it as
+an artifact. The `template/` folder stores the source dotfiles and workflows.
 
 ## Use in an Existing Project
 
@@ -90,9 +112,9 @@ quarto list extensions
 ```
 
 The update replaces only `_extensions/cheatsheet/`. It does not overwrite your
-documents or reapply changes from `template.qmd`, because a starter template is
-copied only when the project is created. Commit local changes before updating
-if you have modified files inside `_extensions/cheatsheet/`.
+documents or reapply changes from the starter `index.qmd`, because a starter
+template is copied only when the project is created. Commit local changes
+before updating if you have modified files inside `_extensions/cheatsheet/`.
 
 ## Usage
 
@@ -216,6 +238,8 @@ The natural numbers are $\NN = \{1, 2, 3, \dots\}$.
 | `theorems.typ`     | Defines numbered theorem environments                         |
 | `blocks-filter.lua` | Converts fenced divs to Typst calls and applies math macros  |
 | `math-macros.lua`  | Defines the math macro substitutions                          |
+| `setup.sh`         | Creates dotfiles and the CI workflow after `quarto use template` |
+| `template/`        | Source dotfiles and CI workflows for `setup.sh`               |
 
 ## Development
 
@@ -229,7 +253,7 @@ quarto render
 ```
 
 Without direnv, use `nix develop` instead. `quarto render` builds both
-`template.qmd` and the full feature showcase in `examples/example.qmd`.
+`index.qmd` and the full feature showcase in `examples/example.qmd`.
 
 ## License
 

@@ -1,0 +1,13 @@
+image: nixos/nix:latest
+
+stages:
+  - render
+
+render-cheatsheet:
+  stage: render
+  script:
+    - nix --extra-experimental-features "nix-command flakes" develop --command quarto render
+  artifacts:
+    paths:
+      - "*.pdf"
+    expire_in: 1 week
