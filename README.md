@@ -10,6 +10,7 @@ short math macros.
 - A4 landscape pages with a configurable number of columns
 - Five heading levels, each with its own shade of blue
 - Compact 9pt body text by default
+- Styled Markdown tables with blue headers, subtle striped rows, and compact spacing
 - Callouts: tip, warning, and neutral blocks
 - Numbered theorem-style environments
 - Math macros for common number sets (`\NN`, `\ZZ`, `\QQ`, `\RR`, `\CC`, `\LL`)
@@ -144,6 +145,19 @@ the first column.
 The `title`, `author`, and `date` fields from the front matter are rendered in
 the header. Paper size, orientation, margins, heading styles, and column gutters
 are defined by the extension.
+
+### Tables
+
+Standard Markdown tables automatically use a light blue header with bold text,
+subtle alternating row backgrounds, and a thin blue header separator instead of
+a full grid. Column alignment, inline formatting, and math are preserved:
+
+```markdown
+| Set       | Symbol | Dimension |
+|:----------|:------:|----------:|
+| **Real**  | $\RR$  |         1 |
+| Complex   | $\CC$  |         2 |
+```
 
 ### Callouts
 

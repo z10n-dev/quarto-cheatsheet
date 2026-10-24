@@ -32,6 +32,13 @@ Regular paragraphs, **bold text**, *italic text*, `inline code`, and
 | `lemma`       | `Lem.` |
 | `proposition` | `Prop.`|
 
+Column alignment, formatting, and math are supported:
+
+| Set       | Symbol | Dimension |
+|:----------|:------:|----------:|
+| **Real**  | $\RR$  |         1 |
+| Complex   | $\CC$  |         2 |
+
 ## Code
 
 ```python

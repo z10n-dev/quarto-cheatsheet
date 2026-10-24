@@ -44,3 +44,12 @@ The natural numbers are defined as $\NN = \{1, 2, 3, \dots\}$.
 
 See `examples/example.qmd` for a complete showcase of all callouts, theorem
 environments, and formatting options.
+
+| Policy | Idea | Trade-off |
+|--------|------|-----------|
+| FCFS | arrival order | simple, but short jobs wait behind long ones (convoy effec) |
+| SJF | shortest burst first | minimal average wait, but burst times must be known |
+| SRT | preemptive SJF, shortest remaining time first | responsive, but more context switches |
+| Round Robin | fixed time quantum, cyclic | fair and responsive; small quantum = overhead, large quantum = FCFS |
+| Priority | highest priority first | urgency respected; starvation, mitigated by aging |
+| MLFQ | several queues with feedback | adapts to behaviour; but complex to tune |

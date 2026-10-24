@@ -13,6 +13,23 @@
   )
   set text(size: font-size)
   set heading(numbering: "1")
+
+  // Compact Markdown tables, matching the blue heading palette.
+  set table(
+    stroke: none,
+    inset: (x: 5pt, y: 3pt),
+    fill: (_, y) => if y == 0 {
+      rgb("#dbeafe")
+    } else if calc.even(y) {
+      rgb("#f1f5f9")
+    },
+  )
+  // Pandoc inserts an explicit rule beneath Markdown table headers.
+  set table.hline(stroke: 0.5pt + rgb("#93c5fd"))
+  show table.cell.where(y: 0): set text(
+    fill: rgb("#0d2b6b"),
+    weight: "bold",
+  )
   
   // Headings
   set heading(numbering: "1.1")
