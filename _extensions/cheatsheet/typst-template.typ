@@ -67,6 +67,9 @@
     text(size: 8pt, fill: gray)[#date]
 )
   #set par(leading: 0.5em)
+  // Start lists with the same gap as a normal line, not a new paragraph.
+  #show list: set block(above: 0.5em)
+  #show enum: set block(above: 0.5em)
   #doc
   ])
   

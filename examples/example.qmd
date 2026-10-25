@@ -14,9 +14,13 @@ Regular paragraphs, **bold text**, *italic text*, `inline code`, and
 
 ## Lists
 
+An unordered list follows directly at normal line spacing:
+
 - First bullet
 - Second bullet with $\NN$ math
 - Third bullet
+
+A numbered list uses the same compact spacing:
 
 1. First step
 2. Second step
