@@ -56,8 +56,8 @@ end
 function Div(div)
   local width = mermaid_width(div)
   if width then
-    div.content:insert(1, pandoc.RawBlock("typst", "#block(width: " .. width .. ")["))
-    div.content:insert(pandoc.RawBlock("typst", "]"))
+    div.content:insert(1, pandoc.RawBlock("typst", "#align(center)[\n#block(width: " .. width .. ")["))
+    div.content:insert(pandoc.RawBlock("typst", "]\n]"))
     return div
   end
 

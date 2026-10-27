@@ -40,7 +40,7 @@ class MermaidWidthTests(unittest.TestCase):
             with self.subTest(width=width):
                 result = self.convert(self.cell(width))
                 self.assertEqual(result.returncode, 0, result.stderr)
-                self.assertIn(f"#block(width: {width})[", result.stdout)
+                self.assertIn(f"#align(center)[\n#block(width: {width})[", result.stdout)
                 self.assertIn("Example caption", result.stdout)
                 self.assertIn("<fig-example>", result.stdout)
                 self.assertIn('image("mermaid-figure-1.png"', result.stdout)
@@ -50,7 +50,7 @@ class MermaidWidthTests(unittest.TestCase):
         result = self.convert(content)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("#tipp()", result.stdout)
-        self.assertIn("#block(width: 70%)[", result.stdout)
+        self.assertIn("#align(center)[\n#block(width: 70%)[", result.stdout)
 
     def test_rejects_invalid_percentage_values(self):
         for width in ("0%", "101%", "-5%", "70", "2in", "anything"):

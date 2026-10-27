@@ -236,7 +236,8 @@ flowchart LR
 ````
 
 The percentage limits the diagram to that fraction of the available column (or
-callout) width. Values greater than 0% and up to 100% are supported, including
+callout) width and centers the diagram block horizontally. Values greater than
+0% and up to 100% are supported, including
 decimals. Captions and labels can be used alongside this option. Use `width`, not
 `fig-width`, for percentages: Quarto interprets `fig-width` as inches.
 
