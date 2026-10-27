@@ -59,6 +59,14 @@ flowchart LR
   A[Write Markdown] --> B[Render with Quarto] --> C[Typeset with Typst] --> D[Download PDF]
 ```
 
+Use `width` to make an individual diagram smaller:
+
+```{mermaid}
+%%| width: "70%"
+flowchart LR
+  A[Input] --> B[Process] --> C[Output]
+```
+
 # Callouts
 
 ::: tipp

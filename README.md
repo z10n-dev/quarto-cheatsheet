@@ -225,6 +225,21 @@ flowchart LR
 ```
 ````
 
+For a smaller diagram, set `width` directly inside the Mermaid block:
+
+````markdown
+```{mermaid}
+%%| width: "70%"
+flowchart LR
+  A[Markdown] --> B[Quarto] --> C[PDF]
+```
+````
+
+The percentage limits the diagram to that fraction of the available column (or
+callout) width. Values greater than 0% and up to 100% are supported, including
+decimals. Captions and labels can be used alongside this option. Use `width`, not
+`fig-width`, for percentages: Quarto interprets `fig-width` as inches.
+
 Images, including Mermaid diagrams, automatically shrink to fit the available
 column width while preserving their aspect ratio. This also respects the inset
 inside callouts. Small images are not enlarged; explicit figure sizes are capped
