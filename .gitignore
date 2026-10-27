@@ -3,6 +3,7 @@ template_files
 *.pdf
 .direnv/
 /.quarto/
+/examples/example_files/
 **/*.quarto_ipynb
 
 /.luarc.json

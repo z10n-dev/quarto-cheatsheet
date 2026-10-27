@@ -214,6 +214,27 @@ a full grid. Column alignment, inline formatting, and math are preserved:
 | Complex   | $\CC$  |         2 |
 ```
 
+### Mermaid Diagrams
+
+Use a Mermaid code block to include a diagram:
+
+````markdown
+```{mermaid}
+flowchart LR
+  A[Markdown] --> B[Quarto] --> C[PDF]
+```
+````
+
+Images, including Mermaid diagrams, automatically shrink to fit the available
+column width while preserving their aspect ratio. This also respects the inset
+inside callouts. Small images are not enlarged; explicit figure sizes are capped
+at the available width. For long diagrams, `flowchart TD` often keeps labels more
+readable than a wide `flowchart LR`.
+
+Quarto needs Chrome or Chromium to render Mermaid. The project's Nix flake
+provides Chromium via `QUARTO_CHROMIUM`; outside Nix, run
+`quarto install chrome-headless-shell` if no supported browser is installed.
+
 ### Callouts
 
 Callouts can be written as fenced divs. The body supports normal Markdown
@@ -325,11 +346,15 @@ quarto render
 Without direnv, use `nix develop` instead. `quarto render` builds both
 `index.qmd` and the full feature showcase in `examples/example.qmd`.
 
-Run the offline update-script integration tests with:
+Run the offline tests with:
 
 ```bash
-python3 -m unittest discover -s tests -v
+python3 -B -m unittest discover -s tests -v
 ```
+
+Image layout tests use Quarto's bundled Typst compiler and are skipped if Quarto
+is not installed. They cover one to four columns, nested blocks, callouts, and
+inline images without requiring a browser.
 
 ## License
 

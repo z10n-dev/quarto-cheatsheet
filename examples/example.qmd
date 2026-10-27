@@ -50,6 +50,15 @@ def greet(name: str) -> str:
     return f"Hello, {name}!"
 ```
 
+# Diagrams
+
+Mermaid diagrams automatically shrink to fit the column width:
+
+```{mermaid}
+flowchart LR
+  A[Write Markdown] --> B[Render with Quarto] --> C[Typeset with Typst] --> D[Download PDF]
+```
+
 # Callouts
 
 ::: tipp

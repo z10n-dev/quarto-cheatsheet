@@ -70,6 +70,17 @@
   // Surround lists with the same gap as a normal line, not a new paragraph.
   #show list: set block(above: 0.5em, below: 0.5em)
   #show enum: set block(above: 0.5em, below: 0.5em)
+  // Quarto gives Mermaid images absolute dimensions. Fit oversized images to
+  // the actual available width, including the inset inside callout blocks.
+  #show image: it => box(layout(size => {
+    let image-size = measure(it)
+    if image-size.width > size.width {
+      let factor = size.width / image-size.width * 100%
+      scale(x: factor, y: factor, reflow: true, it)
+    } else {
+      it
+    }
+  }))
   #doc
   ])
   
