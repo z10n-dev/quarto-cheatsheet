@@ -19,9 +19,11 @@ jobs:
             experimental-features = nix-command flakes
 
       - name: Render PDF
-        run: nix develop --command quarto render
+        env:
+          REPOSITORY: ${{ github.repository }}
+        run: nix develop --command quarto render index.qmd --output "${REPOSITORY##*/}.pdf"
 
-      # Publish the PDF as a release asset so it gets a direct, stable URL.
+      # Publish the PDF as a release asset so it gets a direct download URL.
       # Artifact links use Gitea's ROOT_URL and are not direct file links.
       - name: Publish PDF as release asset
         env:
@@ -29,18 +31,26 @@ jobs:
           SERVER_URL: ${{ github.server_url }}
           REPOSITORY: ${{ github.repository }}
           TAG: build-${{ github.run_number }}
+          COMMIT_SHA: ${{ github.sha }}
         run: |
           set -euo pipefail
+          : "${GITEA_TOKEN:?Set the GITEA_TOKEN repository secret with repository write access}"
+          pdf_name="${REPOSITORY##*/}.pdf"
+          test -f "$pdf_name"
+          release_data=$(jq -n --arg tag "$TAG" --arg sha "$COMMIT_SHA" \
+            --arg name "${REPOSITORY##*/} $TAG" \
+            '{tag_name: $tag, name: $name, target_commitish: $sha}')
           release_id=$(curl -fsS -X POST \
             -H "Authorization: token $GITEA_TOKEN" \
             -H "Content-Type: application/json" \
-            -d "{\"tag_name\": \"$TAG\", \"name\": \"Cheatsheet $TAG\", \"target_commitish\": \"${{ github.sha }}\"}" \
-            "$SERVER_URL/api/v1/repos/$REPOSITORY/releases" | jq -r .id)
-          curl -fsS -X POST \
+            -d "$release_data" \
+            "$SERVER_URL/api/v1/repos/$REPOSITORY/releases" | jq -er .id)
+          pdf_url=$(curl -fsS -X POST \
             -H "Authorization: token $GITEA_TOKEN" \
-            -H "Content-Type: application/pdf" \
-            --data-binary @index.pdf \
-            "$SERVER_URL/api/v1/repos/$REPOSITORY/releases/$release_id/assets?name=index.pdf"
-          pdf_url="$SERVER_URL/$REPOSITORY/releases/download/$TAG/index.pdf"
+            -F "attachment=@${pdf_name};type=application/pdf" \
+            "$SERVER_URL/api/v1/repos/$REPOSITORY/releases/$release_id/assets" \
+            | jq -er .browser_download_url)
           echo "PDF: $pdf_url"
-          echo "PDF: $pdf_url" >> "$GITHUB_STEP_SUMMARY"
+          if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then
+            echo "[Download PDF]($pdf_url)" >> "$GITHUB_STEP_SUMMARY"
+          fi

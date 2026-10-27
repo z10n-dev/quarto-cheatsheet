@@ -20,10 +20,12 @@ jobs:
             experimental-features = nix-command flakes
 
       - name: Render PDF
-        run: nix develop --command quarto render
+        env:
+          REPOSITORY: ${{ github.repository }}
+        run: nix develop --command quarto render index.qmd --output "${REPOSITORY##*/}.pdf"
 
       - name: Upload PDF
         uses: actions/upload-artifact@v4
         with:
-          name: cheatsheet-pdf
-          path: "*.pdf"
+          name: ${{ github.event.repository.name }}-pdf
+          path: ${{ github.event.repository.name }}.pdf

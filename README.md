@@ -65,8 +65,17 @@ It creates:
   - GitLab: `.gitlab-ci.yml`
   - Gitea: `.gitea/workflows/render.yml`
 
-Each workflow renders the PDF through the project's Nix flake and uploads it as
-an artifact. The `template/` folder stores the source dotfiles and workflows.
+Each workflow renders `index.qmd` through the project's Nix flake and names the
+PDF after the repository, for example `my-cheatsheet.pdf`. GitHub and GitLab
+upload it as a CI artifact. Gitea publishes it as a release attachment instead,
+so the PDF can be downloaded directly without a ZIP archive. Its download link
+is printed in the job log and added to the job summary when supported.
+
+For Gitea, configure an Actions repository secret named `GITEA_TOKEN` containing
+a personal access token with repository write access (`write:repository`). Each
+run creates a release tagged `build-<run number>`.
+
+The `template/` folder stores the source dotfiles and workflows.
 
 ## Use in an Existing Project
 
@@ -99,7 +108,53 @@ quarto render path/to/cheatsheet.qmd
 
 ## Update an Existing Project
 
-Run the update from the project directory containing `_extensions/`:
+### Full Template Update
+
+Run the update script from your existing cheatsheet project directory:
+
+```bash
+./update.sh          # detects an installed workflow, otherwise asks
+./update.sh gitea    # github | gitlab | gitea | none
+```
+
+The script downloads the current template from GitHub and asks before replacing:
+
+- `_extensions/cheatsheet/` (layout, styles, and filters)
+- `flake.nix` and `flake.lock` (including Chromium for Mermaid)
+- `template/`, `setup.sh`, and `update.sh`
+- the selected CI workflow
+
+Existing versions are saved under `.cheatsheet-backups/<timestamp>.<suffix>/`.
+Custom QMD documents, `_quarto.yml`, and existing `.envrc` content are left
+unchanged. Existing `.gitignore` rules are kept; only an ignore entry for the
+backup directory is appended if needed. Missing dotfiles are created.
+
+Review the changes afterward and reapply any custom extension, flake, or workflow
+changes from the backup. The new `flake.lock` also updates the pinned development
+dependencies. Then reload direnv (or enter `nix develop`) and render the document.
+With `none`, existing CI workflows are left unchanged.
+
+For non-interactive updates or a particular upstream branch/tag:
+
+```bash
+./update.sh gitea --yes
+./update.sh gitea --ref main
+```
+
+Older projects may not have `update.sh` yet. Download it once, inspect it, then run:
+
+```bash
+curl -fL https://raw.githubusercontent.com/z10n-dev/quarto-cheatsheet/main/update.sh -o update.sh
+chmod +x update.sh
+./update.sh gitea
+```
+
+The script requires Bash and Git. `CHEATSHEET_REPOSITORY` can point to a different
+template Git repository, such as a fork.
+
+### Extension Only
+
+To update only the extension without changing the flake or workflows:
 
 ```bash
 quarto update extension z10n-dev/quarto-cheatsheet
@@ -253,11 +308,12 @@ The natural numbers are $\NN = \{1, 2, 3, \dots\}$.
 | `blocks-filter.lua` | Converts fenced divs to Typst calls and applies math macros  |
 | `math-macros.lua`  | Defines the math macro substitutions                          |
 | `setup.sh`         | Creates dotfiles and the CI workflow after `quarto use template` |
+| `update.sh`        | Updates an existing project, with backups of replaced files    |
 | `template/`        | Source dotfiles and CI workflows for `setup.sh`               |
 
 ## Development
 
-The repository includes a Nix flake with Quarto, Pandoc, Python, and R, plus a
+The repository includes a Nix flake with Quarto, Pandoc, Python, R, and Chromium, plus a
 minimal `_quarto.yml` so the example in the subdirectory can resolve the
 extension. With Nix and direnv installed:
 
@@ -268,6 +324,12 @@ quarto render
 
 Without direnv, use `nix develop` instead. `quarto render` builds both
 `index.qmd` and the full feature showcase in `examples/example.qmd`.
+
+Run the offline update-script integration tests with:
+
+```bash
+python3 -m unittest discover -s tests -v
+```
 
 ## License
 

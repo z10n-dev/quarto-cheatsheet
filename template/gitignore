@@ -3,3 +3,4 @@
 /.quarto/
 **/*.quarto_ipynb
 /.luarc.json
+/.cheatsheet-backups/

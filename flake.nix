@@ -46,7 +46,9 @@
           quarto
           python
           r
+          pkgs.chromium
         ];
+        QUARTO_CHROMIUM = "${pkgs.chromium}/bin/chromium";
       };
     };
 }

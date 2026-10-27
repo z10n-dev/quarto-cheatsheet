@@ -6,3 +6,4 @@ template_files
 **/*.quarto_ipynb
 
 /.luarc.json
+/.cheatsheet-backups/

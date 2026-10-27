@@ -6,8 +6,8 @@ stages:
 render-cheatsheet:
   stage: render
   script:
-    - nix --extra-experimental-features "nix-command flakes" develop --command quarto render
+    - nix --extra-experimental-features "nix-command flakes" develop --command quarto render index.qmd --output "$CI_PROJECT_NAME.pdf"
   artifacts:
     paths:
-      - "*.pdf"
+      - "$CI_PROJECT_NAME.pdf"
     expire_in: 1 week
